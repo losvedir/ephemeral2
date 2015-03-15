@@ -1,0 +1,13 @@
+<div class="jumbotron">
+  <h2>Welcome to Ephemeral P2P Hosting</h2>
+  <p class="lead">Enter the page content you want below. After you submit, you will be redirected to your new page. That page will live as long as someone, somewhere is viewing it. Once the last person closes their browser, the page will be gone.</p>
+</div>
+
+<div>
+  <div class="form-group">
+    <textarea id="new-page-content" class="form-control" rows="10"></textarea>
+  </div>
+  <div class="form-group">
+    <button id="create-new-page" type="submit" class="btn btn-default">Create page</button>
+  </div>
+</div>
