@@ -31,7 +31,6 @@ defmodule Ephemeral2.HaveChannel do
   end
 
   defp visitor_count(socket) do
-    100
-    # HashSet.size Phoenix.PubSub.subscribers(Ephemeral2.PubSub, socket.topic)
+    Enum.count Phoenix.PubSub.Local.subscribers(Ephemeral2.PubSub.Local, socket.topic)
   end
 end
