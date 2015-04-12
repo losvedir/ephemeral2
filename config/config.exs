@@ -11,7 +11,8 @@ config :ephemeral2, Ephemeral2.Endpoint,
   secret_key_base: "7hUETO8S1CFwnaqqJzHRBqcoT4X50sBtkeT7h3UbONb1m2RFK0Co5Azi0NFiDzUO",
   debug_errors: false,
   pubsub: [name: Ephemeral2.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+           adapter: Phoenix.PubSub.PG2],
+  root: Path.expand("..", __DIR__)
 
 # Configures Elixir's Logger
 config :logger, :console,
