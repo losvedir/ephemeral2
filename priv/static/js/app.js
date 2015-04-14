@@ -1008,10 +1008,6 @@ function SHA256(s) {
 
 var Socket = require("phoenix").Socket;
 
-// let socket = new Socket("/ws")
-// socket.join("topic:subtopic", {}, chan => {
-// })
-
 var s;
 var hash;
 var content;
@@ -1019,14 +1015,19 @@ var counter = document.getElementById("visitor-count");
 var visitorCount = 0;
 
 function haveContent(socket, hash, content) {
+  for (var i = 0; i < socket.channels.length; i++) {
+    if (socket.channels[i].topic === "have:" + hash) {
+      return;
+    }
+  }
+
   socket.join("have:" + hash, {}).receive("ok", function (chan) {
     chan.on("CONTENT_REQUEST", function (_msg) {
       chan.push("CONTENT", { content: content, hash: hash });
     });
-    chan.on("VISITORS", function (msg) {
+    chan.on("VISITORS_COUNT", function (msg) {
       counter.innerHTML = msg.count;
     });
-    chan.push("VISITOR_REQUEST", {}, function () {});
   });
 }
 

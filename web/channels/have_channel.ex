@@ -4,14 +4,14 @@ defmodule Ephemeral2.HaveChannel do
 
   def join("have:" <> hash, _message, socket) do
     Logger.info "Joined HaveChannel: #{hash}"
-
+    Process.flag(:trap_exit, true)
     send(self, :broadcast_count)
     {:ok, socket}
   end
 
   def terminate(_reason, socket) do
     Logger.info "Left HaveChannel: #{socket.topic}"
-    send(self, :broadcast_count)
+    broadcast! socket, "VISITORS_COUNT", %{"count" => visitor_count(socket) - 1}
     :ok
   end
 
@@ -26,13 +26,8 @@ defmodule Ephemeral2.HaveChannel do
     end
   end
 
-  def handle_in("VISITOR_REQUEST", _msg, socket) do
-    push socket, "VISITORS", %{"count" => visitor_count(socket)}
-    {:noreply, socket}
-  end
-
   def handle_info(:broadcast_count, socket) do
-    broadcast socket, "VISITORS", %{"count" => visitor_count(socket)}
+    broadcast! socket, "VISITORS_COUNT", %{"count" => visitor_count(socket)}
     {:noreply, socket}
   end
 
