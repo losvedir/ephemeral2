@@ -7,9 +7,9 @@ defmodule Ephemeral2.WantChannel do
     {:ok, socket}
   end
 
-  def handle_in("CONTENT_REQUEST", %{"hash" => hash}, socket) do
-    Logger.info "handle_in WantChannel CONTENT_REQUEST"
-    Ephemeral2.Endpoint.broadcast! "have:" <> hash, "CONTENT_REQUEST", %{}
+  def handle_in("content_request", %{"hash" => hash}, socket) do
+    Logger.info "handle_in WantChannel content_request"
+    Ephemeral2.Endpoint.broadcast! "have:" <> hash, "content_request", %{}
     {:noreply, socket}
   end
 end
