@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   var socket = new Socket("/ws");
   socket.connect();
+  socket.join("all", {});
 
   if ( homePageElement ) {
     homePageElement.addEventListener("click", function() {

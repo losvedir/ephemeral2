@@ -13,6 +13,7 @@ defmodule Ephemeral2 do
       worker(Ephemeral2.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(Ephemeral2.Worker, [arg1, arg2, arg3]),
+      worker(Ephemeral2.SocketCounter, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

@@ -15,6 +15,7 @@ defmodule Ephemeral2.Router do
   socket "/ws", Ephemeral2 do
     channel "have:*", HaveChannel
     channel "want:*", WantChannel
+    channel "all", AllChannel
   end
 
   scope "/", Ephemeral2 do
