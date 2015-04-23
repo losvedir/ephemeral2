@@ -13,7 +13,7 @@ defmodule Ephemeral2.SocketCounter do
   end
 
   def handle_info(:log_stuff, state) do
-    Logger.info "Total subscribers: #{Enum.count Phoenix.PubSub.Local.subscribers(Ephemeral2.PubSub.Local, "all")}"
+    Logger.info "total_subscribers=#{Enum.count Phoenix.PubSub.Local.subscribers(Ephemeral2.PubSub.Local, "all")}"
     Process.send_after(self, :log_stuff, 5_000)
     {:noreply, state}
   end

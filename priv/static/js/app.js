@@ -1044,10 +1044,10 @@ function haveContent(socket, hash, content) {
   }
 
   socket.join("have:" + hash, {}).receive("ok", function (chan) {
-    chan.on("CONTENT_REQUEST", function (_msg) {
-      chan.push("CONTENT", { content: content, hash: hash });
+    chan.on("content_request", function (_msg) {
+      chan.push("content", { content: content, hash: hash });
     });
-    chan.on("VISITORS_COUNT", function (msg) {
+    chan.on("visitors_count", function (msg) {
       counter.innerHTML = msg.count;
     });
   });
@@ -1055,12 +1055,12 @@ function haveContent(socket, hash, content) {
 
 function wantContent(socket, hash, elem) {
   socket.join("want:" + hash, {}).receive("ok", function (chan) {
-    chan.on("CONTENT", function (msg) {
+    chan.on("content", function (msg) {
       elem.innerHTML = msg.content;
       chan.leave();
       haveContent(socket, hash, msg.content);
     });
-    chan.push("CONTENT_REQUEST", { hash: hash });
+    chan.push("content_request", { hash: hash });
   });
 }
 
