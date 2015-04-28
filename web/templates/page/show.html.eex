@@ -1,4 +1,0 @@
-<div class="jumbotron">
-  <h2>Loading from peers...</h2>
-  <small><%= @hash %></small>
-</div>

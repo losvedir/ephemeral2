@@ -14,6 +14,7 @@
   <body>
     <div class="container">
       <div>Currently Viewing: <span id="visitor-count">0</span></div>
+      <div id="js-console"><ul></ul></div>
       <div id="content-goes-here">
 
         <%= @inner %>

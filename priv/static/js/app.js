@@ -1003,15 +1003,35 @@ function SHA256(s) {
 
     s = Utf8Encode(s);
     return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
-};require.register("web/static/js/app", function(exports, require, module) {
+};require.register("web/static/js/WebConsole", function(exports, require, module) {
 "use strict";
 
-var Socket = require("phoenix").Socket;
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var WebConsole = exports.WebConsole = function WebConsole(list) {
+  _classCallCheck(this, WebConsole);
+
+  this.list = list;
+};});
+
+;require.register("web/static/js/app", function(exports, require, module) {
+"use strict";
+
+var _phoenix = require("phoenix");
+
+var Socket = _phoenix.Socket;
+var WebConsole = _phoenix.WebConsole;
 
 var hash;
 var content;
+var webConsole;
 
 document.addEventListener("DOMContentLoaded", function () {
+  webConsole = new WebConsole(document.getElementById("js-console"));
   var homePageElement = document.getElementById("create-new-page");
   var showPageElement = document.getElementById("content-goes-here");
 

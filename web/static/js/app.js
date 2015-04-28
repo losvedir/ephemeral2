@@ -1,9 +1,12 @@
 import {Socket} from "phoenix";
+import {WebConsole} from "phoenix";
 
 var hash;
 var content;
+var webConsole;
 
 document.addEventListener("DOMContentLoaded", function() {
+  webConsole = new WebConsole(document.getElementById('js-console'));
   var homePageElement = document.getElementById("create-new-page");
   var showPageElement = document.getElementById("content-goes-here");
 
