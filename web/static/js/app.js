@@ -1,5 +1,5 @@
 import {Socket} from "phoenix";
-import {WebConsole} from "phoenix";
+import WebConsole from "./web_console";
 
 var hash;
 var content;
@@ -10,9 +10,10 @@ document.addEventListener("DOMContentLoaded", function() {
   var homePageElement = document.getElementById("create-new-page");
   var showPageElement = document.getElementById("content-goes-here");
 
+  webConsole.log("Connecting to websocket.");
   var socket = new Socket("/ws");
   socket.connect();
-  socket.join("all", {});
+  socket.join("all", {}).receive("ok", function() { webConsole.log("Connected!") });
 
   if ( homePageElement ) {
     homePageElement.addEventListener("click", function() {
@@ -39,8 +40,11 @@ function haveContent(socket, hash, content) {
   }
 
   socket.join("have:" + hash, {}).receive("ok", function(chan) {
+    webConsole.log("Standing by... ready to share this content!")
     chan.on("content_request", function(_msg) {
+      webConsole.log("Request received...");
       chan.push("content", {content: content, hash: hash});
+      webConsole.log("Content sent!");
     });
     chan.on("visitors_count", function(msg) {
       counter.innerHTML = msg.count;
@@ -51,10 +55,12 @@ function haveContent(socket, hash, content) {
 function wantContent(socket, hash, elem) {
   socket.join("want:" + hash, {}).receive("ok", function(chan) {
     chan.on("content", function(msg) {
+      webConsole.log(`Received content for hash ${hash}`);
       elem.innerHTML = msg.content;
       chan.leave();
       haveContent(socket, hash, msg.content);
     });
+    webConsole.log(`Requesting content for hash ${hash}`);
     chan.push("content_request", {hash: hash});
   });
 }

@@ -6067,5 +6067,21 @@ table tr:nth-child(even) > td {
   .jumbotron {
     border-bottom: 0; } }
 
+/* line 113, stdin */
+.web-console {
+  height: 75px;
+  overflow: scroll;
+  border: 1px solid #ddd; }
+
+/* line 114, stdin */
+.web-console ul {
+  padding: 0;
+  margin: 0; }
+
+/* line 115, stdin */
+.web-console li {
+  list-style-type: none;
+  padding-left: 1em; }
+
 
 /*# sourceMappingURL=app.css.map*/

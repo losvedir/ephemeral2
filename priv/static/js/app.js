@@ -1003,28 +1003,14 @@ function SHA256(s) {
 
     s = Utf8Encode(s);
     return binb2hex(core_sha256(str2binb(s), s.length * chrsz));
-};require.register("web/static/js/WebConsole", function(exports, require, module) {
+};require.register("web/static/js/app", function(exports, require, module) {
 "use strict";
 
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var Socket = require("phoenix").Socket;
 
-var WebConsole = exports.WebConsole = function WebConsole(list) {
-  _classCallCheck(this, WebConsole);
-
-  this.list = list;
-};});
-
-;require.register("web/static/js/app", function(exports, require, module) {
-"use strict";
-
-var _phoenix = require("phoenix");
-
-var Socket = _phoenix.Socket;
-var WebConsole = _phoenix.WebConsole;
+var WebConsole = _interopRequire(require("./web_console"));
 
 var hash;
 var content;
@@ -1035,9 +1021,12 @@ document.addEventListener("DOMContentLoaded", function () {
   var homePageElement = document.getElementById("create-new-page");
   var showPageElement = document.getElementById("content-goes-here");
 
+  webConsole.log("Connecting to websocket.");
   var socket = new Socket("/ws");
   socket.connect();
-  socket.join("all", {});
+  socket.join("all", {}).receive("ok", function () {
+    webConsole.log("Connected!");
+  });
 
   if (homePageElement) {
     homePageElement.addEventListener("click", function () {
@@ -1064,8 +1053,11 @@ function haveContent(socket, hash, content) {
   }
 
   socket.join("have:" + hash, {}).receive("ok", function (chan) {
+    webConsole.log("Standing by... ready to share this content!");
     chan.on("content_request", function (_msg) {
+      webConsole.log("Request received...");
       chan.push("content", { content: content, hash: hash });
+      webConsole.log("Content sent!");
     });
     chan.on("visitors_count", function (msg) {
       counter.innerHTML = msg.count;
@@ -1076,10 +1068,12 @@ function haveContent(socket, hash, content) {
 function wantContent(socket, hash, elem) {
   socket.join("want:" + hash, {}).receive("ok", function (chan) {
     chan.on("content", function (msg) {
+      webConsole.log("Received content for hash " + hash);
       elem.innerHTML = msg.content;
       chan.leave();
       haveContent(socket, hash, msg.content);
     });
+    webConsole.log("Requesting content for hash " + hash);
     chan.push("content_request", { hash: hash });
   });
 }
@@ -1087,6 +1081,41 @@ function wantContent(socket, hash, elem) {
 var App = {};
 
 module.exports = App;});
+
+;require.register("web/static/js/web_console", function(exports, require, module) {
+"use strict";
+
+var _createClass = (function () { function defineProperties(target, props) { for (var key in props) { var prop = props[key]; prop.configurable = true; if (prop.value) prop.writable = true; } Object.defineProperties(target, props); } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+var WebConsole = (function () {
+  // takes a <ul> element
+
+  function WebConsole(list) {
+    _classCallCheck(this, WebConsole);
+
+    console.log(list);
+    this.list = list;
+  }
+
+  _createClass(WebConsole, {
+    log: {
+      value: function log(msg) {
+        var list = this.list;
+        var li = document.createElement("li");
+        var text = document.createTextNode(msg);
+        li.appendChild(text);
+        list.appendChild(li);
+        list.scrollTop = list.scrollHeight;
+      }
+    }
+  });
+
+  return WebConsole;
+})();
+
+module.exports = WebConsole;});
 
 ;
 //# sourceMappingURL=app.js.map
