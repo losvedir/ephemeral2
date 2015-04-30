@@ -3,6 +3,7 @@ defmodule Ephemeral2.HaveChannel do
   require Logger
 
   def join("have:" <> hash, _message, socket) do
+    :random.seed(:os.timestamp)
     Logger.info "Joined HaveChannel: #{hash}"
     Process.flag(:trap_exit, true)
     send(self, :broadcast_count)
@@ -24,6 +25,26 @@ defmodule Ephemeral2.HaveChannel do
     else
       {:stop, :bad_hash, socket}
     end
+  end
+
+  def handle_out("content_request", payload, socket) do
+    threshhold = 1.0 / visitor_count(socket)
+    rand = :random.uniform
+    Logger.info "threshhold: #{threshhold}, rand: #{rand}"
+
+    if rand < threshhold do
+      Logger.info "sending content_request"
+      push socket, "content_request", payload
+    else
+      Logger.info "dropping content_request"
+    end
+
+    {:noreply, socket}
+  end
+
+  def handle_out(msg, payload, socket) do
+    push socket, msg, payload
+    {:noreply, socket}
   end
 
   def handle_info(:broadcast_count, socket) do

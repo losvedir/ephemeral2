@@ -24,9 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
       haveContent(socket, hash, content);
     });
   } else if ( showPageElement ) {
-    setTimeout(function() {
-      wantContent(socket, window.location.pathname.substr(1), showPageElement);
-    }, 2000);
+    wantContent(socket, window.location.pathname.substr(1), showPageElement);
   }
 });
 
@@ -53,15 +51,23 @@ function haveContent(socket, hash, content) {
 }
 
 function wantContent(socket, hash, elem) {
+  var requestContentInterval;
+
   socket.join("want:" + hash, {}).receive("ok", function(chan) {
+    webConsole.log(`Listening for content for hash ${hash}`);
+
     chan.on("content", function(msg) {
+      clearInterval(requestContentInterval);
       webConsole.log(`Received content for hash ${hash}`);
       elem.innerHTML = msg.content;
       chan.leave();
       haveContent(socket, hash, msg.content);
     });
-    webConsole.log(`Requesting content for hash ${hash}`);
-    chan.push("content_request", {hash: hash});
+
+    requestContentInterval = setInterval(function(){
+      webConsole.log("Requesting content.");
+      chan.push("content_request", {hash: hash});
+    }, 2000);
   });
 }
 
