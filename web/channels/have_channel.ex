@@ -5,7 +5,6 @@ defmodule Ephemeral2.HaveChannel do
   def join("have:" <> hash, _message, socket) do
     :random.seed(:os.timestamp)
     Logger.info "Joined HaveChannel: #{hash}"
-    Process.flag(:trap_exit, true)
     send(self, :broadcast_count)
     {:ok, socket}
   end

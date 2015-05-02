@@ -24,9 +24,9 @@ defmodule Ephemeral2.Mixfile do
   defp deps do
     [
       {:cowboy, "~> 1.0"},
-      {:phoenix, "~> 0.11.0"},
+      {:phoenix, "~> 0.12.0"},
       {:phoenix_ecto, "~> 0.1"},
-      {:phoenix_live_reload, "~> 0.3"},
+      {:phoenix_live_reload, "~> 0.3.3"},
       {:postgrex, ">= 0.0.0"},
     ]
   end

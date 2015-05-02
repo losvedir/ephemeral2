@@ -1080,7 +1080,7 @@ function wantContent(socket, hash, elem) {
     requestContentInterval = setInterval(function () {
       webConsole.log("Requesting content.");
       chan.push("content_request", { hash: hash });
-    }, 1500);
+    }, 2000);
   });
 }
 
