@@ -13,7 +13,7 @@
 
   <body>
     <div class="container">
-      <div>Currently Viewing: <span id="visitor-count">0</span></div>
+      <p>Currently Viewing: <span id="visitor-count">0</span></p>
       <div id="js-console" class="web-console"><ul></ul></div>
       <hr>
       <div id="content-goes-here">

@@ -6081,7 +6081,7 @@ table tr:nth-child(even) > td {
 /* line 115, stdin */
 .web-console li {
   list-style-type: none;
-  padding-left: 1em; }
+  padding: 0 0 0 1em; }
 
 
 /*# sourceMappingURL=app.css.map*/
