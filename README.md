@@ -1,5 +1,7 @@
 # Ephemeral P2P
 
+See example implementation [running here](http://ephemeralp2p.durazo.us/).
+
 This app hosts "P2P" pages that are "ephemeral". We say "P2P" because the clients host the page; new visitors retrieve the page contents from other visitors on the same page. It's "ephemeral" in that the server does not store the contents of any page, so once the last visitor leaves a particular page, it is gone.
 
 # How it works
