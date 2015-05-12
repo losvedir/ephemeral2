@@ -6071,7 +6071,7 @@ table tr:nth-child(even) > td {
 .web-console {
   height: 75px;
   overflow: scroll;
-  border: 1px solid #ddd; }
+  border: 1px solid #e5e5e5; }
 
 /* line 114, stdin */
 .web-console ul {
