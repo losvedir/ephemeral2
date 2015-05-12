@@ -1320,9 +1320,9 @@ var Socket = require("phoenix").Socket;
 
 var WebConsole = _interopRequire(require("./web_console"));
 
-var hash;
-var content;
-var webConsole;
+var hash = undefined;
+var content = undefined;
+var webConsole = undefined;
 
 document.addEventListener("DOMContentLoaded", function () {
   webConsole = new WebConsole(document.getElementById("js-console"));
@@ -1376,7 +1376,7 @@ function haveContent(socket, hash, content) {
 }
 
 function wantContent(socket, hash, elem) {
-  var requestContentInterval;
+  var requestContentInterval = undefined;
 
   var chan = socket.chan("want:" + hash, {});
   chan.on("content", function (msg) {
