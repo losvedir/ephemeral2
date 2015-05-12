@@ -4,6 +4,6 @@ defmodule Ephemeral2.AllChannel do
 
   def join("all", _message, socket) do
     Logger.info "Joined AllChannel"
-    {:ok, socket}
+    {:ok, %{}, socket}
   end
 end

@@ -13,7 +13,9 @@ document.addEventListener("DOMContentLoaded", function() {
   webConsole.log("Connecting to websocket.");
   var socket = new Socket("/ws");
   socket.connect();
-  socket.join("all", {}).receive("ok", function() { webConsole.log("Connected!") });
+
+  var chan = socket.chan("all", {});
+  chan.join().receive("ok", function() { webConsole.log("Connected!") });
 
   if ( homePageElement ) {
     homePageElement.addEventListener("click", function() {
@@ -37,32 +39,35 @@ function haveContent(socket, hash, content) {
     }
   }
 
-  socket.join("have:" + hash, {}).receive("ok", function(chan) {
+  var chan = socket.chan("have:" + hash, {});
+  chan.on("content_request", function(_msg) {
+    webConsole.log("Request received...");
+    chan.push("content", {content: content, hash: hash});
+    webConsole.log("Content sent!");
+  });
+  chan.on("visitors_count", function(msg) {
+    counter.innerHTML = msg.count;
+  });
+
+  chan.join().receive("ok", function(chan) {
     webConsole.log("Standing by... ready to share this content!")
-    chan.on("content_request", function(_msg) {
-      webConsole.log("Request received...");
-      chan.push("content", {content: content, hash: hash});
-      webConsole.log("Content sent!");
-    });
-    chan.on("visitors_count", function(msg) {
-      counter.innerHTML = msg.count;
-    });
   });
 }
 
 function wantContent(socket, hash, elem) {
   var requestContentInterval;
 
-  socket.join("want:" + hash, {}).receive("ok", function(chan) {
-    webConsole.log(`Listening for content for hash ${hash}`);
+  var chan = socket.chan("want:" + hash, {});
+  chan.on("content", function(msg) {
+    clearInterval(requestContentInterval);
+    webConsole.log(`Received content for hash ${hash}`);
+    elem.innerHTML = msg.content;
+    chan.leave();
+    haveContent(socket, hash, msg.content);
+  });
 
-    chan.on("content", function(msg) {
-      clearInterval(requestContentInterval);
-      webConsole.log(`Received content for hash ${hash}`);
-      elem.innerHTML = msg.content;
-      chan.leave();
-      haveContent(socket, hash, msg.content);
-    });
+  chan.join().receive("ok", function() {
+    webConsole.log(`Listening for content for hash ${hash}`);
 
     requestContentInterval = setInterval(function(){
       webConsole.log("Requesting content.");

@@ -4,7 +4,7 @@ defmodule Ephemeral2.WantChannel do
 
   def join("want:" <> hash, _message, socket) do
     Logger.info "Joined WantChannel: #{hash}"
-    {:ok, socket}
+    {:ok, %{}, socket}
   end
 
   def handle_in("content_request", %{"hash" => hash}, socket) do
