@@ -21,8 +21,7 @@ export default class WebConsole {
   }
   
   isScrolledToTheBottom() {
-    var list = this.list;
-    return list.scrollTop >= list.scrollHeight - list.clientHeight;
+    return this.list.scrollTop >= this.list.scrollHeight - this.list.clientHeight;
   }
   
   scrollToTheBottom() {
