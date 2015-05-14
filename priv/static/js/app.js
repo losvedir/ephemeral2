@@ -1421,12 +1421,29 @@ var WebConsole = (function () {
   _createClass(WebConsole, {
     log: {
       value: function log(msg) {
-        var list = this.list;
+        var wasScrolledToTheBottom = this.isScrolledToTheBottom();
+        this.addLine(msg);
+        if (wasScrolledToTheBottom) {
+          this.scrollToTheBottom();
+        }
+      }
+    },
+    addLine: {
+      value: function addLine(msg) {
         var li = document.createElement("li");
         var text = document.createTextNode(msg);
         li.appendChild(text);
-        list.appendChild(li);
-        list.scrollTop = list.scrollHeight;
+        this.list.appendChild(li);
+      }
+    },
+    isScrolledToTheBottom: {
+      value: function isScrolledToTheBottom() {
+        return this.list.scrollTop >= this.list.scrollHeight - this.list.clientHeight;
+      }
+    },
+    scrollToTheBottom: {
+      value: function scrollToTheBottom() {
+        this.list.scrollTop = this.list.scrollHeight;
       }
     }
   });

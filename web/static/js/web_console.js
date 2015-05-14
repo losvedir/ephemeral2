@@ -6,24 +6,24 @@ export default class WebConsole {
   }
 
   log(msg) {
-    var wasScrolledToTheBottom = isScrolledToTheBottom();
-    addLine(msg);
+    let wasScrolledToTheBottom = this.isScrolledToTheBottom();
+    this.addLine(msg);
     if (wasScrolledToTheBottom) {
-      scrollToTheBottom();
+      this.scrollToTheBottom();
     }
   }
-  
+
   addLine(msg) {
     var li = document.createElement("li");
     var text = document.createTextNode(msg);
     li.appendChild(text);
     this.list.appendChild(li);
   }
-  
+
   isScrolledToTheBottom() {
     return this.list.scrollTop >= this.list.scrollHeight - this.list.clientHeight;
   }
-  
+
   scrollToTheBottom() {
     this.list.scrollTop = this.list.scrollHeight;
   }
