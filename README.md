@@ -1,6 +1,6 @@
 # Ephemeral P2P
 
-See example implementation [running here](http://ephemeralp2p.durazo.us/).
+See example implementation [running here](http://ephemeralp2p.durazo.us/). Discussion on Hacker News [here](https://news.ycombinator.com/item?id=9531265).
 
 This app hosts "P2P" pages that are "ephemeral". We say "P2P" because the clients host the page; new visitors retrieve the page contents from other visitors on the same page. It's "ephemeral" in that the server does not store the contents of any page, so once the last visitor leaves a particular page, it is gone.
 
@@ -15,3 +15,20 @@ A subsequent visitor who loads `/abc123` joins the `want:abc123` topic and tries
 When a `want:abc123` subscriber gets the content, it leaves the `want:abc123` topic and joins the `have:abc123` topic, ready to pass it along to newer visitors.
 
 Lastly, whenever a subscriber joins or leaves `have:abc123`, the new visitor count is broadcast, so all clients know the "health" of the page and how close it is to going away.
+
+# Run it yourself
+
+First you'll need to [install Elixir](http://elixir-lang.org/install.html). Once you have elixir set up, it should be as easy as:
+
+```
+$ git clone git@github.com:losvedir/ephemeral2.git
+$ cd ephemeral2
+$ mix deps.get
+$ mix phoenix.server
+```
+
+That should serve a copy of the app locally at `localhost:4000`. If you would like to modify the CSS or Javascript, you'll need to install [npm](https://www.npmjs.com/) and then brunch with:
+
+```
+$ npm install -g brunch
+```
