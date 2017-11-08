@@ -28,9 +28,6 @@ defmodule Ephemeral2.Web do
     quote do
       use Phoenix.Controller
 
-      # Alias the data repository as a convenience
-      alias Ephemeral2.Repo
-
       # Import URL helpers from the router
       import Ephemeral2.Router.Helpers
     end
@@ -38,7 +35,6 @@ defmodule Ephemeral2.Web do
 
   def model do
     quote do
-      use Ecto.Model
     end
   end
 

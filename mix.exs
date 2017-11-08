@@ -3,7 +3,7 @@ defmodule Ephemeral2.Mixfile do
 
   def project do
     [app: :ephemeral2,
-     version: "0.0.1",
+     version: "0.0.2",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
@@ -25,10 +25,8 @@ defmodule Ephemeral2.Mixfile do
     [
       {:cowboy, "~> 1.0"},
       {:phoenix, "~> 0.13"},
-      {:phoenix_ecto, "~> 0.4"},
       {:phoenix_html, "~> 1.0"},
       {:phoenix_live_reload, "~> 0.4"},
-      {:postgrex, ">= 0.0.0"},
     ]
   end
 

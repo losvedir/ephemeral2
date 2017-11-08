@@ -8,12 +8,3 @@ config :ephemeral2, Ephemeral2.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
-
-# Configure your database
-config :ephemeral2, Ephemeral2.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "ephemeral2_test",
-  size: 1,
-  max_overflow: false

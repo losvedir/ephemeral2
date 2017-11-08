@@ -31,10 +31,3 @@ config :ephemeral2, Ephemeral2.Endpoint, code_reloader: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
-
-# Configure your database
-config :ephemeral2, Ephemeral2.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "ephemeral2_dev"
