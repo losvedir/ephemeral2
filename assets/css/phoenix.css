@@ -1,9 +1,3 @@
-/* This file is for your main application css. */
-
-.web-console {height:75px; overflow:scroll; border:1px solid #e5e5e5}
-.web-console ul {padding:0; margin:0}
-.web-console li {list-style-type:none; padding:0 0 0 1em}
-
 /* Includes Bootstrap as well as some default style for the starter
  * application. This can be safely deleted to start fresh.
  */
@@ -81,5 +75,3 @@ body, form, ul, table {
     border-bottom: 0;
   }
 }
-
-/*# sourceMappingURL=app.css.map*/

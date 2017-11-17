@@ -6,13 +6,12 @@
 use Mix.Config
 
 # Configures the endpoint
-config :ephemeral2, Ephemeral2.Endpoint,
+config :ephemeral2, Ephemeral2Web.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "7hUETO8S1CFwnaqqJzHRBqcoT4X50sBtkeT7h3UbONb1m2RFK0Co5Azi0NFiDzUO",
-  debug_errors: false,
+  secret_key_base: "bS5WZOnD3ul0jryRS2Afj9VuloR5hXh3bzXIuDqTEk5lf4G66zeP3Qm9f7FHNerz",
+  render_errors: [view: Ephemeral2Web.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Ephemeral2.PubSub,
-           adapter: Phoenix.PubSub.PG2],
-  root: Path.expand("..", __DIR__)
+           adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
